@@ -32,7 +32,7 @@ classdef Trainer < handle
             
             sum = 0;
             for b = 1:batchSize
-                target = shuffledTargets(b, :);
+                target = shuffledTargets(b,:);
                 input = shuffledInputs(b,:);
                 actual = trainer.Network.forward(input);
                 trainer.Network.backward(target);
