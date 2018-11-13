@@ -1,11 +1,12 @@
-classdef Logsig < Tf
+classdef Softmax < Tf
     methods
         function output = eval(tf,x)
-            output = 1 ./ (1 + exp(-x)); % ./ is elementwise division
+            e = exp(x - max(x));
+            output = e / sum(e);
         end
         
         function output = deriv(tf,y)
-            output = y .* (1 - y);
+            output = 1;
         end
     end
 end

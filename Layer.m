@@ -82,7 +82,7 @@ classdef Layer < handle
                 
                 % S(m) = -2tfderiv(n(m)) * (t - a)
                 error = transpose((targets - layer.LastOutput));
-                tfS = layer.Tf.deriv(layer.LastNetInput);
+                tfS = layer.Tf.deriv(transpose(layer.LastOutput));
                 
                 % Calculate gradient only based on current gradients
                 layer.Grad = ((-2 * tfS) .* error);
@@ -95,7 +95,7 @@ classdef Layer < handle
                 error = transpose(nextLayer.Weights) * nextLayer.Grad;  
                 
                 % Calculate current gradient, and update mean
-                layer.Grad = layer.Tf.deriv(layer.LastNetInput) .* error;               
+                layer.Grad = layer.Tf.deriv(transpose(layer.LastOutput)) .* error;               
             end
         end
         

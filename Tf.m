@@ -11,7 +11,7 @@ classdef Tf
             output = 0;
         end
         
-        function output = deriv(tf, x)
+        function output = deriv(tf, y)
             output = nan;
         end
     end
