@@ -33,7 +33,7 @@ end
 % Validate results
 correctCnt = 0;
 for tImage = 1:10000
-    output = net.forward(testImages(tImage));
+    output = network.forward(testImages(tImage));
     
     % get highest value
     prediction = getNumber(output);

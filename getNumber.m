@@ -1,5 +1,5 @@
 function [number] = getNumber(activation)
-    maxValue = activation(0);
+    maxValue = activation(1);
     number = 0;
     for i = 2:length(activation)
         curNumber = activation(i);
