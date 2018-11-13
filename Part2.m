@@ -9,8 +9,8 @@ testLabelsFile = strcat(pwd, "\MNIST\t10k-labels.idx1-ubyte");
 [trainImages, trainLabels] = readMNIST(trainImagesFile,trainLabelsFile,60000,0);
 [testImages, testLabels] = readMNIST(testImagesFile,testLabelsFile,10000,0);
 
-%TODO: Convert 28x28 -> flatten -> 784x1
-%TODO: Convert labels to 10x1 array
+%Convert 28x28 -> flatten -> 784x1
+%Convert labels to 10x1 array
 
 trainImages = reshape(trainImages, [60000, 784]);
 testImages = reshape(testImages, [10000, 784]);
