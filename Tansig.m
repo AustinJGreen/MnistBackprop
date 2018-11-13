@@ -8,11 +8,8 @@ classdef Tansig < Tf
             output = numerator ./ denominator; % ./ is elementwise division
         end
         
-        function output = deriv(tf,x)
-            expn = exp(2 .* x);
-            numerator = 4 .* expn;
-            denominator = (expn + 1) .* (expn + 1);
-            output = numerator ./ denominator;
+        function output = deriv(tf,y)
+            output = 1 - (y .* y);
         end
     end
 end
