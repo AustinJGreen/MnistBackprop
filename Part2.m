@@ -16,24 +16,24 @@ disp ("Reshaping data...");
 trainImages = reshape(trainImages, [60000, 784]);
 testImages = reshape(testImages, [10000, 784]);
 trainLabels = convertLabel(trainLabels);
-testLabels = convertLabel(testLabels);
 
-layer1 = Layer(784,300,Logsig);
-layer2 = Layer(layer1,100,Logsig);
-layer3 = Layer(layer2,10,Logsig);
+layer1 = Layer(784,300,Logsig,0,1);
+layer2 = Layer(layer1,100,Logsig,0,1);
+layer3 = Layer(layer2,10,Logsig,0,1);
 network = Network([layer1, layer2, layer3]);
-trainer = Trainer(network, 0.01);
+trainer = Trainer(network, 0.0001);
 
 % Start training on training images
-for epoch = 1:10 
+for epoch = 1:1
     mse = trainer.trainAll(trainImages,trainLabels); 
     disp(strcat("epoch = ", num2str(epoch), " mse = ", num2str(mse)));
 end
 
 % Validate results
 correctCnt = 0;
-for tImage = 1:10000
-    output = network.forward(testImages(tImage));
+for tImage = 1:10000   
+    t = testImages(tImage,:);
+    output = network.forward(t);
     
     % get highest value
     prediction = getNumber(output);

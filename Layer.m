@@ -38,7 +38,7 @@ classdef Layer < handle
     
     methods
 
-        function layer = Layer(arg1, neuronCount, tf)
+        function layer = Layer(arg1, neuronCount, tf, minInit, maxInit)
             if (class(arg1) == "Layer")
                 layer.InputCount = arg1.NeuronCount;
             else
@@ -47,8 +47,10 @@ classdef Layer < handle
 
             layer.NeuronCount = neuronCount;
             
-            % Create weight matrix and initialize uniformly between [-1,1]
-            layer.Weights = (rand(neuronCount, layer.InputCount) * 2) - 1;
+            % Create weight matrix and initialize uniformly between
+            % [minInit, maxInit]
+            maxDif = maxInit - minInit;
+            layer.Weights = (rand(neuronCount, layer.InputCount) * maxDif) + minInit;
             
             % Create bias vector and initialize with 0s for now
             layer.Biases = zeros(neuronCount, 1);
