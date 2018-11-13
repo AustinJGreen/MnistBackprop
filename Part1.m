@@ -32,8 +32,8 @@ for i= 1:length(pixelChangeCount)
     shuffleCount = pixelChangeCount(i);
     
     % Create new network
-    layer1 = Layer(30, hiddenUnits, Logsig);
-    layer2 = Layer(layer1, 3, Logsig);
+    layer1 = Layer(30, hiddenUnits, Logsig, -1, 1);
+    layer2 = Layer(layer1, 3, Logsig, -1, 1);
     network = Network([layer1, layer2]);
     trainer = Trainer(network, learningRate);
     mse = 0;  
