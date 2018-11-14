@@ -1,17 +1,15 @@
 classdef Tf
-    %Tf Transfer function class
-    
     properties
         Func
         Deriv
     end
     
     methods
-        function output = eval(tf, x)
+        function output = eval(~, ~)
             output = 0;
         end
         
-        function output = deriv(tf, y)
+        function output = deriv(~, ~)
             output = nan;
         end
     end

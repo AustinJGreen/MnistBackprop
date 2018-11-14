@@ -15,16 +15,16 @@ t2 = [ 0 0 1 ];
 tMatrix = [ t0 ; t1 ; t2 ];
 
 learningRate = 0.01;
-hiddenUnits = 240;
-setEpochs = 10000;
-pixelChangeCount = [ 0, 4, 8 ];
+hiddenUnits = 40;
+setEpochs = 5000;
+pixelChangeCount = [ 0 4 8 ];
+colors = [ "red", "green", "blue" ];
+legendStr = [ "0 shuffles", "4 shuffles", "8 shuffles" ];
 
 epochData = [ setEpochs setEpochs setEpochs ];
 errorData = zeros(length(pixelChangeCount), setEpochs);
 
-linePatterns = [ 'b-', 'r-', 'g-' ];
 increments = [ 1 10 100 ];
-hold on;
 
 for i= 1:length(pixelChangeCount)
     
@@ -49,21 +49,20 @@ for i= 1:length(pixelChangeCount)
         end
         
         mse = trainer.trainAll(inputMatrix, tMatrix);    
-        errorData(i, e) = mse;
-        
-        if (mse <= 0.01)
-            epochData(i) = e;
-            break;
-        end
-        
+        errorData(i, e) = mse;      
     end
 end
 
 hold on;
-for p = 1:3
+for p = 1:length(pixelChangeCount)
     xData = 1:increments(p):epochData(p);
     yData = errorData(p,1:increments(p):epochData(p));
-    plot(xData,yData,linePatterns(p));
+    plotHandle = plot(xData,yData,'-');
+    set(plotHandle, "Color", colors(p));
+    title("MSE of classification compared to number of epochs");
+    xlabel("Epochs");
+    ylabel("Mean Squared Error");
 end
+legend(legendStr);
 hold off;
 

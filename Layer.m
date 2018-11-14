@@ -1,37 +1,25 @@
 classdef Layer < handle
-    %Layer Handles individual layer processing
-    
     properties
         % The index of the layer in the network
-        Index
-        
+        Index        
         % The network the layer is in
-        Network
-        
+        Network        
         % The amount of inputs in a vector this layer takes in
-        InputCount
-        
-        % The amount of neurosn in this layer
-        NeuronCount
-        
+        InputCount       
+        % The amount of neurons in this layer
+        NeuronCount       
         % The transfer function for this layer
-        Tf
-        
+        Tf       
         % The weights for this layer
-        Weights
-        
+        Weights       
         % The biases for this layer
-        Biases
-        
+        Biases        
         % Gradient
-        Grad
-        
+        Grad        
         % The last input passed into this Layer (a - 1)
-        LastInput
-        
+        LastInput      
         % The last input passed into this Layer's Tf (n)
         LastNetInput
-        
         % The last output passed out of this layer (a)
         LastOutput
     end
@@ -49,7 +37,8 @@ classdef Layer < handle
             
             % Create weight matrix and initialize uniformly between
             % [minInit, maxInit]
-            maxDif = maxInit - minInit;
+            
+            maxDif = maxInit - minInit;            
             layer.Weights = (rand(neuronCount, layer.InputCount) * maxDif) + minInit;
             
             % Create bias vector and initialize with 0s for now
