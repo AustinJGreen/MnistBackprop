@@ -1,10 +1,10 @@
 classdef Purelin < Tf
     methods
-        function output = eval(tf,x)
+        function output = eval(~,x)
             output = x;
         end
         
-        function output = deriv(tf,x)
+        function output = deriv(~,~)
             output = 1;
         end
     end

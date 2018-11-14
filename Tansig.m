@@ -1,6 +1,6 @@
 classdef Tansig < Tf
     methods
-        function output = eval(tf,x)
+        function output = eval(~,x)
             expN = exp(x);
             expNN = exp(-x);
             numerator = expN - expNN;
@@ -8,7 +8,7 @@ classdef Tansig < Tf
             output = numerator ./ denominator; % ./ is elementwise division
         end
         
-        function output = deriv(tf,y)
+        function output = deriv(~,y)
             output = 1 - (y .* y);
         end
     end

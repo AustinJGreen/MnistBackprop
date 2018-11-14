@@ -1,10 +1,3 @@
-%Create network
-layer1 = Layer(784,20,Logsig,-1,1);
-%layer2 = Layer(layer1,100,Logsig,-1,1);
-layer3 = Layer(layer1,10,Softmax,-1,1);
-network = Network([layer1, layer3]);
-trainer = Trainer(network, 0.0001);
-
 % Fetch directory
 currentFolder = pwd;
 
@@ -28,40 +21,54 @@ trainLabels = convertLabel(trainLabels);
 % Start training on training images
 batchSize = size(trainImages, 1);
 
-iterations = [ ];
-meanSquaredErrors = [ ];
+hiddenUnits = [ ];
+accuracies = [ ];
 
-for epoch = 1:5   
+%Create network
+layer1 = Layer(784,97,Tansig,-0.01,0.01);
+layer2 = Layer(97,11,Tansig,-0.01,0.01);
+layer3 = Layer(11,10,Softmax,-0.01,0.01);
+network = Network([layer1, layer2, layer3]);
+trainer = Trainer(network, 0.009);
 
+for epoch = 1:35   
     idx = randperm(batchSize);
     shuffledInputs = trainImages(idx,:);
     shuffledTargets = trainLabels(idx,:);
-    
+
     for b = 1:batchSize
         input = shuffledInputs(b,:);
         target = shuffledTargets(b,:);  
         actual = network.forward(input);
         network.backward(target);
         network.update(trainer.LearningRate);       
-        mse = meanSquaredError(target - actual); 
-        
-        iteration = ((epoch - 1) * batchSize) + b;
-        if (mod(iteration, 1000) == 0)
-            disp(strcat("Iteration ", num2str(iteration), " mse = ", num2str(mse)));
-            %iterations = [ iterations, iteration ];
-            %meanSquaredErrors = [ meanSquaredErrors, mse ];
-            %plot(iterations, meanSquaredErrors);
-            %drawnow limitrate;
+        %mse = mean((target - actual) .* (target - actual)); 
+    end   
+    
+    % Validate results
+    correctCnt = 0;
+    for tImage = 1:10000   
+        t = testImages(tImage,:);
+        output = network.forward(t);
+
+        % get highest value
+        prediction = getNumber(output);
+        actual = testLabels(tImage);
+        if (prediction == actual)
+            correctCnt = correctCnt + 1;
         end
-    end    
-end
+    end
+    
+    accuracy = (correctCnt / 10000.0) * 100;    
+    disp(strcat("Epoch = ", num2str(epoch), " acc = ", num2str(accuracy)));
+end 
 
 % Validate results
 correctCnt = 0;
 for tImage = 1:10000   
     t = testImages(tImage,:);
     output = network.forward(t);
-    
+
     % get highest value
     prediction = getNumber(output);
     actual = testLabels(tImage);
@@ -71,4 +78,4 @@ for tImage = 1:10000
 end
 
 accuracy = (correctCnt / 10000.0) * 100;
-disp(strcat("Accuracy = ", num2str(accuracy)));
+disp(strcat("Final Accuracy = ", num2str(accuracy)));
